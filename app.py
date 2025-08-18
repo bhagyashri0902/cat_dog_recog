@@ -8,7 +8,7 @@ import cv2
 # Load the saved model
 @st.cache_resource  # cache so model loads only once
 def load_catdog_model():
-    model = load_model("cd_model.h5")
+    model = load_model("cd_model1.h5")
     return model
 
 model = load_catdog_model()
@@ -58,6 +58,7 @@ if uploaded_file is not None:
                 """,
                 unsafe_allow_html=True
             )
+
 
 
 
