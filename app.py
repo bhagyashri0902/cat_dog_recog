@@ -44,27 +44,28 @@ if uploaded_file is not None:
     with col2:
         if st.button("🔍 Predict"):
     # Preprocess image
-    img_resized = cv2.resize(img_array, (224, 224))
-    img_resized = img_resized / 255.0
-    img_resized = np.expand_dims(img_resized, axis=0)  # (1,224,224,3)
+            img_resized = cv2.resize(img_array, (224, 224))
+            img_resized = img_resized / 255.0
+            img_resized = np.expand_dims(img_resized, axis=0)  # (1,224,224,3)
 
     # Predict
-    preds = model.predict(img_resized)
+            preds = model.predict(img_resized)
 
-    if preds.shape[1] == 2:  # Softmax
-        yp = np.argmax(preds, axis=1)[0]
-    else:  # Sigmoid
-        yp = int(preds[0][0] >= 0.5)
+            if preds.shape[1] == 2:  # Softmax
+                yp = np.argmax(preds, axis=1)[0]
+            else:  # Sigmoid
+                yp = int(preds[0][0] >= 0.5)
+        
+            label = class_names[yp]
 
-    label = class_names[yp]
+            st.markdown(
+                f"""
+                <div style="padding:20px; background-color:#f0f2f6; border-radius:10px; text-align:center;">
+                    <h3>✅ Prediction:</h3>
+                    <h2 style="color:green;">{label}</h2>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-    st.markdown(
-        f"""
-        <div style="padding:20px; background-color:#f0f2f6; border-radius:10px; text-align:center;">
-            <h3>✅ Prediction:</h3>
-            <h2 style="color:green;">{label}</h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
 
